@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: university-club
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/university_club}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    # Dev-only default. 71 bytes → safe for HS256, HS384, and HS512.
+    # Override with the JWT_SECRET env var in production.
+    secret: ${JWT_SECRET:nJoahVJabnpuFGrne3IpyghZRVUE17TE9AePZUGcWVO5AHxxISizLLOFhjcPb/Oaaq5+DZcHp0LK8BFdEc6A4g==}
+    expiration: 86400000     # adjust to whatever your JwtConfig expects (ms or seconds)
+  bootstrap:
+    president-email: ${BOOTSTRAP_PRESIDENT_EMAIL:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+
